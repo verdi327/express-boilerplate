@@ -35,15 +35,18 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.use(function errorHandler(error, req, res, next) {
-  let response;
+app.use(errorHandler);
+
+function errorHandler(error, req, res, next) {
+  const code = error.status || 500;
+
   if (NODE_ENV === 'production') {
-    response = { error: { message: 'server error' } };
+    error.message = code === 500 ? 'internal server error' : error.message;
   } else {
     console.error(error);
-    response = { message: error.message, error };
   }
-  res.status(500).json(response);
-});
+
+  res.status(code).json({ message: error.message });
+}
 
 module.exports = app;
