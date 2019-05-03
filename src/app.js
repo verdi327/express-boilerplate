@@ -14,12 +14,13 @@ const morganOption = (NODE_ENV === 'production')
 
 app.use(morgan(morganOption));
 app.use(helmet());
+app.use(express.json());
 
 // whitelist allowed origins
 const allowedOrigins = ['http://localhost:3000', 'http://my-prod-client-app-url'];
 app.use(cors({
   origin: function(origin, callback){
-    // allow requests with no origin - like mobile apps or curl requests
+    // allow requests with no origin - like mobile apps, curl, postman
     if(!origin) return callback(null, true);
     if(allowedOrigins.indexOf(origin) === -1){
       const msg = 'The CORS policy for this site does not ' +
