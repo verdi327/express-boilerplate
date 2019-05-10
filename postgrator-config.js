@@ -2,7 +2,7 @@
 // delete this file, migrate script, migrations folder
 // uninstall pg and most likely knex
 'use strict';
-require('dotenv');
+require('dotenv').config();
 
 module.exports = {
   'migrationDirectory': 'migrations',
